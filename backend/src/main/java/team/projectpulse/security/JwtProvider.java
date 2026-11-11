@@ -1,7 +1,7 @@
 package team.projectpulse.security;
 
-import team.projectpulse.user.MyUserPrincipal;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
@@ -21,13 +21,13 @@ public class JwtProvider {
         this.jwtEncoder = jwtEncoder;
     }
 
-    public String createToken(Authentication authentication) {
+    String createToken(Authentication authentication, Integer userId) {
         Instant now = Instant.now();
         long expiresIn = 2; // 2 hours
 
         // Prepare a claim called authorities.
         String authorities = authentication.getAuthorities().stream()
-                .map(grantedAuthority -> grantedAuthority.getAuthority())
+                .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));// MUST BE space-delimited.
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
@@ -35,7 +35,7 @@ public class JwtProvider {
                 .issuedAt(now)
                 .expiresAt(now.plus(expiresIn, ChronoUnit.HOURS))
                 .subject(authentication.getName())
-                .claim("userId", ((MyUserPrincipal) (authentication.getPrincipal())).getPeerEvaluationUser().getId())
+                .claim("userId", userId)
                 .claim("authorities", authorities)
                 .build();
 
