@@ -1,6 +1,10 @@
 package team.projectpulse.system;
 
-public class StatusCode {
+public final class StatusCode {
+
+    private StatusCode() {
+        // Status codes are accessed as class constants.
+    }
 
     public static final int SUCCESS = 200; // Success
 

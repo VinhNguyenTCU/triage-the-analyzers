@@ -13,5 +13,13 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
     <description>PMD quickstart, with Project Pulse's decisions.</description>
     <rule ref="rulesets/java/quickstart.xml">
+        <!-- D2: Entities such as Activity and PeerEvaluationAverage declare empty constructors
+             for JPA instantiation. Explicit no-argument constructors document the available
+             framework entry point and survive when another constructor is added. -->
+        <exclude name="UncommentedEmptyConstructor"/>
+        <exclude name="UnnecessaryConstructor"/>
+        <!-- D4: Login, reminders, and template-loading logs use parameterized messages.
+             Their arguments are names, collection sizes, or simple getters. -->
+        <exclude name="GuardLogStatement"/>
     </rule>
 </ruleset>

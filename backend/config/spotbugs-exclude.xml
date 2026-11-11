@@ -7,4 +7,8 @@
 
      Unlike the baseline, this file may grow, but every entry is a reviewed decision. -->
 <FindBugsFilter>
+    <!-- D1: Section.addInstructor updates Instructor's Hibernate-managed collection in place.
+         Controllers such as ActivityController retain the Spring service injected into them.
+         A general defensive-copy rule conflicts with both forms of deliberate sharing. -->
+    <Match><Bug pattern="EI_EXPOSE_REP,EI_EXPOSE_REP2"/></Match>
 </FindBugsFilter>
